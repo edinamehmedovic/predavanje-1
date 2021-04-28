@@ -1,20 +1,29 @@
 import React from 'react';
 import "./Table.css";
 
-const Table = () => {
+//header = [ 'title 1', 'title 2', ... ]
+// rows = [
+//  { value, value2}
+// ]
+
+const Table = ({header, rows}) => {
     return <table className="container">
-                <th className="table-header">
-                    <td>Ime</td>
-                    <td>Prezime</td>
-                </th>
-                <tr className="table-row">
-                    <td>Ime 1</td>
-                    <td>Prezime 1</td>
+                <tr className="table-header">
+                    {
+                        Array.isArray(header) &&
+                            header.map((item, index) => {
+                                return <th key={index}>{item}</th>
+                            })
+                    }
                 </tr>
-                <tr className="table-row">
-                    <td>Ime 2</td>
-                    <td>Prezime 2</td>
-                </tr>
+        { Array.isArray(rows) &&
+            rows.map(row => {
+                console.log((Object.values(row)));
+                return <tr className="table-row" key={row?.id}>
+                    {Object.values(row).map((item, index) =>  <td key={index}>{item}</td>)}
+                            </tr>
+            })
+        }
             </table>
 }
 
