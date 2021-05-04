@@ -1,27 +1,23 @@
 import './App.css';
-import MyImage from "./components/myImage/MyImage";
-import Table from "./components/table/Table";
-import IdCard from "./components/idCard/IdCard";
-import Wrapper from "./components/wrapper/Wrapper";
-import ChildElement from "./components/childElement/ChildElement";
-import {logToConsole, logToConsole2, mapArray} from "./functions/examples";
-import {wrapperElements} from "./functions/wraapperElements";
-import Counter from "./components/counter/Counter";
-import MyData from "./contexts/MyData";
 import React from 'react';
-import ReducerExample from "./components/reducerExample/reducerExample";
-import DebouncedSearch from "./components/debouncedSearch/DebouncedSearch";
+import Component1 from "./components/styles/component1/Component1";
+import Component2 from "./components/styles/component2/Component2";
+import StyledComponent from "./components/styles/styledComponent/StyledComponent";
+import NavbarTop from "./components/navbarTop/NavbarTop";
 import Movies from "./pages/movies/Movies";
+
 
 function App() {
 
   return (
     <div className="App">
-
-    {/*<MyData.Provider value={{data: wrapperElements, name: 'Ana'}}>*/}
-      <Movies/>
-    {/*</MyData.Provider>*/}
-
+        <NavbarTop/>
+        <Component1 className="some-class" hasClass/>
+        <Component1 className="some-class"/>
+        <Component2 />
+        <StyledComponent/>
+        <StyledComponent backroundColor="yellow"/>
+        <Movies/>
     </div>
   );
 }

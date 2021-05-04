@@ -4,24 +4,23 @@ import Form from "./components/form/Form";
 import "./Movies.css";
 import movies from "../../constants/movies";
 import MoviesData from "../../contexts/MoviesData";
+import Button from 'react-bootstrap/Button'
 
 const changeMovies = (state, action) => {
     switch(action.type){
         case 'filter':
-            return state.filter(item => item.title.includes(action.data));
-        // case 'edit':
+            return  action.data.length > 0 ? movies.filter(item => item.title.includes(action.data)) : movies;
+        case 'add':
+            const newId = movies.length;
+         return [...movies, {id: newId, title: action.data.title, year: action.data.year}]
+        case 'edit':
             // action.data {id, title, year}
-            // return state.map(item => {
-            //     if(item.id === action.data.id){
-            //         return action.data
-            //     }
-            //     return item;
-            // });
-        // case 'add':
-            // state.push(action.data)
-            // {} =>  {... oldData, title: '...'}
-            // [] => [..oldArray, newValue]
-            //  return [...state, action.data]
+            return state.map(item => {
+                if(item.id === action.data.id){
+                    return action.data
+                }
+                return item;
+            });
         default:
             return ;
     }
@@ -29,23 +28,33 @@ const changeMovies = (state, action) => {
 
 const Movies = () => {
     const [isGridInView, setIsGridInView] = useState(true) // grid - form
-    const [moviesList, dispatch] = useReducer(changeMovies, movies)
+    const [moviesList, dispatch] = useReducer(changeMovies, movies);
+    const [selectedRow, setSelectedRow] = useState({});
+
+    const onRowClick = (e) => {
+        console.log(e)
+        setSelectedRow(e);
+        setIsGridInView(false);
+    }
 
     return <MoviesData.Provider value={{
         list: moviesList,
         dispatch: (e) => dispatch(e)}}>
     <div className="container">
         <div>
-            <button onClick={() => setIsGridInView(true)}>Prikazi filmove</button>
-            <button onClick={() => setIsGridInView(false)}>Dodaj novi film</button>
-            <button onClick={() => setIsGridInView(false)}>Izmijeni film</button>
+            <Button variant="dark"  onClick={() => setIsGridInView(true)}>Prikazi filmove</Button>
+            <Button variant="dark"  onClick={() => setIsGridInView(false)}>Dodaj novi film</Button>
+            <Button variant="dark"  onClick={() => setIsGridInView(false)}>Izmijeni film</Button>
         </div>
         <div>
             {
                 isGridInView ?
-                    <Grid/>
+                    <Grid onRowClick={onRowClick}/>
                     :
-                    <Form/>
+                    <Form returnToGrid={() => {
+                        setIsGridInView(true);
+                        setSelectedRow({});
+                    }} data={selectedRow}/>
             }
         </div>
     </div>

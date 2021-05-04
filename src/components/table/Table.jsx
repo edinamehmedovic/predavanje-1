@@ -1,14 +1,16 @@
 import React from 'react';
 import "./Table.css";
+import Table from 'react-bootstrap/Table'
 
 //header = [ 'title 1', 'title 2', ... ]
 // rows = [
 //  { value, value2}
 // ]
 
-const Table = ({header, rows}) => {
-    return <table className="container">
-                <tr className="table-header">
+const TableComponent = ({header, rows, onRowClick}) => {
+    return <Table striped bordered hover variant="dark">
+        <thead>
+                <tr>
                     {
                         Array.isArray(header) &&
                             header.map((item, index) => {
@@ -16,15 +18,18 @@ const Table = ({header, rows}) => {
                             })
                     }
                 </tr>
+        </thead>
+        <tbody>
         { Array.isArray(rows) &&
             rows.map(row => {
                 console.log((Object.values(row)));
-                return <tr className="table-row" key={row?.id}>
+                return <tr key={row?.id} onClick={() => onRowClick(row)}>
                     {Object.values(row).map((item, index) =>  <td key={index}>{item}</td>)}
                             </tr>
             })
         }
-            </table>
+        </tbody>
+    </Table>
 }
 
-export default Table;
+export default TableComponent;
