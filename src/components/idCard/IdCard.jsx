@@ -13,8 +13,8 @@ const IdCard = ({name, surname, city='Podgorica', image, childElement: ChildElem
         <div>Ime: {name}</div>
         <div>Prezime: {surname}</div>
         <div>Grad: {city}</div>
-        <div>Slika: {image}</div>
-        <div><ChildElement parentName={parentName}/></div>
+        {/*<div>Slika: {image}</div>*/}
+        {/*<div><ChildElement parentName={parentName}/></div>*/}
         <button onClick={() => onClick && onClick()}>Click me!</button>
     </div>
 }

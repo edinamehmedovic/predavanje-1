@@ -1,23 +1,26 @@
 import './App.css';
 import React from 'react';
-import Component1 from "./components/styles/component1/Component1";
-import Component2 from "./components/styles/component2/Component2";
-import StyledComponent from "./components/styles/styledComponent/StyledComponent";
-import NavbarTop from "./components/navbarTop/NavbarTop";
+import {Switch} from 'react-router-dom';
 import Movies from "./pages/movies/Movies";
-
+import Styling from "./pages/styling/Styling";
+import People from "./pages/people/People";
+import Administration from "./pages/administration/Administration";
+import Person from "./pages/people/Person";
+import Login from "./pages/login/Login";
+import PrivateRoute from "./privateRoute/PrivateRoute";
 
 function App() {
 
   return (
     <div className="App">
-        <NavbarTop/>
-        <Component1 className="some-class" hasClass/>
-        <Component1 className="some-class"/>
-        <Component2 />
-        <StyledComponent/>
-        <StyledComponent backroundColor="yellow"/>
-        <Movies/>
+        <Switch>
+            <PrivateRoute path="/movies" exact component={Movies} isPrivate/>
+            <PrivateRoute path="/styling" exact component={Styling} isPrivate/>
+            <PrivateRoute path="/people" exact component={People} isPrivate/>
+            <PrivateRoute path="/people/:name" exact component={Person} isPrivate/>
+            <PrivateRoute path="/administration" component={Administration} isPrivate/>
+            <PrivateRoute path="/login" component={Login}/>
+        </Switch>
     </div>
   );
 }
